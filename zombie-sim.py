@@ -205,9 +205,9 @@ def plot_simulation(dict):
     f = plt.figure()
     af = f.add_subplot(111)
     df = pd.DataFrame.from_dict(dict)
-    print(df)
     humans_p = ['humans' + str(i) for i in range(0, 100, 10)]
-    af.plot(df['zombies'], label='Z')
+    x=af.plot(df['zombies'], label='Z')
+    plt.setp(x, linewidth=3)
     af.plot(df[humans_p])
     for i in range(0, 100, 10):
         af.text(len(df), df.iloc[-1]['humans' + str(i)], i)
@@ -228,7 +228,7 @@ logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 for skew in [10, 20, 30, 40, 50, 60]:
     exp = [gaussian(x, skew, 20) * 100 for x in range(0, 100, 10)]
     logging.debug(exp)
-    d = sim(population=100000, infected=0.02, exp=exp, exp_growth=True)
+    d = sim(population=10000, infected=0.02, exp=exp, exp_growth=True)
     statistics(d)
     plot_simulation(d)
 plt.show()
