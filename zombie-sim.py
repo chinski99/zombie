@@ -1,3 +1,5 @@
+# coding: utf-8
+
 import logging
 
 import matplotlib.pyplot as plt
@@ -87,7 +89,7 @@ def sim(population=10000, infected=0.025, exp=(1, 1, 1, 1, 1, 1, 1, 1, 1, 1), z_
         zvh = (types[:, 0] == -77) & (types[:, 1] >= 0)
 
         # prawdopodobieństwo wygranej zombie
-        win = (np.random.uniform(size=sum(zvh)) > types[zvh, 1] / 100)
+        win = (np.random.uniform(size=sum(zvh)) > types[zvh, 1].astype(float) / 100)
 
         # zombie wygrywa - kod 4 lub ginie - kod 2
         conflict[zvh, 0] = np.where(win, 4, 2)
@@ -225,7 +227,7 @@ def gaussian(x, x0, sigma):
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
 # test dla rozkładów normalnych o różnej wartości średniej (populacja symetryczna to średnia 45)
-for skew in [10, 20, 30, 40, 50, 60]:
+for skew in [ 10,20,30,40,50,60]:
     exp = [gaussian(x, skew, 20) * 100 for x in range(0, 100, 10)]
     logging.debug(exp)
     d = sim(population=10000, infected=0.02, exp=exp, exp_growth=True)
